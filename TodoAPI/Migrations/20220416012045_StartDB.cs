@@ -39,12 +39,18 @@ namespace TodoAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
                     email = table.Column<string>(type: "text", nullable: false),
-                    created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    password = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_user", x => x.id);
                 });
+
+            migrationBuilder.InsertData(
+                table: "user",
+                columns: new[] { "id", "email", "name", "password" },
+                values: new object[] { 1, "admin@admin.com", "admin", "82b83e666a49d8a95c424330bb4edfc8" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

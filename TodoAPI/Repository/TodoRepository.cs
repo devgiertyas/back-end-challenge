@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TodoAPI.Context;
-using TodoAPI.DataObjects;
+﻿using TodoAPI.Context;
 using TodoAPI.Models;
 using TodoAPI.Repository.Interfaces;
 

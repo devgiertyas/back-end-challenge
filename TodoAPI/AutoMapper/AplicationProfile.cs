@@ -9,9 +9,13 @@ namespace TodoAPI.AutoMapper
 
      public AplicationProfile()
         {
-            CreateMap<Todo, TodoDTO>().ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<Todo, TodoDTO>();
 
-            CreateMap<TodoDTO, Todo>();
+            CreateMap<TodoDTO, Todo>().ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<User, UserDTO>().ForMember(x => x.Password, opt => opt.Ignore());
+
+            CreateMap<UserDTO, User>().ForMember(dest => dest.Id, opt => opt.Ignore());
         }
 
     }

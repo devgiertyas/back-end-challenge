@@ -4,12 +4,37 @@ using TodoAPI.Context;
 using Microsoft.Extensions.DependencyInjection;
 using TodoAPI.Repository.Interfaces;
 using TodoAPI.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using TodoAPI;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+
+// For Authentication
+
+var key = Encoding.ASCII.GetBytes(Settings.Secret);
+
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x => {
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters { 
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = true,
+        ValidateAudience = false,
+    }; });
+
 builder.Services.AddCors();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -26,8 +51,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IBaseRepository, BaseRepository>();
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
-
-
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 // Config do Banco de Dados
@@ -49,7 +73,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.UseCors(x => x.AllowAnyMethod().AllowAnyMethod().AllowAnyHeader());
 
 app.MapControllers();
