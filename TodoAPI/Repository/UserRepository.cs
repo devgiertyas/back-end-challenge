@@ -54,5 +54,10 @@ namespace TodoAPI.Repository
             .FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<User>> GetUserAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
     }
 }

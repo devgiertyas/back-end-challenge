@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TodoAPI.DataObjects;
+using TodoAPI.DataTransferObjects.User;
 using TodoAPI.Helpers;
 using TodoAPI.Models;
 using TodoAPI.Repository.Interfaces;
@@ -25,7 +26,7 @@ namespace TodoAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Post(UserDTO user)
+        public async Task<IActionResult> Post(UserAddTDO user)
         {
             try
             {
@@ -52,13 +53,13 @@ namespace TodoAPI.Controllers
                 _repository.Add(userAdd);
 
                 return await _repository.SaveChangesAsync()
-                    ? Ok(userAdd)
-                    : BadRequest("Teste");
+                    ? Ok(_mapper.Map<UserGetDTO>(userAdd))
+                    : BadRequest(new ErrorDTO(false, "Erro ao criar usuário"));
 
             }
             catch (Exception ex)
             {
-               return  BadRequest("Erro ao adiconar Tudo" + ex.Message);
+               return  BadRequest(new ErrorDTO(false, ex.Message));
                
             }
 
@@ -68,36 +69,51 @@ namespace TodoAPI.Controllers
         [Authorize]
         public async Task<IActionResult> GetById(int id)
         {
-            var todo = await _repository.GetUserByIdAsync(id);
+            var user = await _repository.GetUserByIdAsync(id);
 
-            var todoData = _mapper.Map<UserDTO>(todo);
+            var userData = _mapper.Map<UserGetDTO>(user);
 
-            return todoData != null
-                    ? Ok(todoData)
-                    : BadRequest("Não achou nada");
+            return userData != null
+                    ? Ok(userData)
+                    : BadRequest(new ErrorDTO(false, "Usuário não Encontrado"));
 
         }
 
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> Put(int id, UserDTO todo)
+        public async Task<IActionResult> Put(int id, UserPutDTO user)
         {
+            if (id <= 0) return BadRequest(new ErrorDTO(false, "Usuário inválido"));
 
+            var userRepo = await _repository.GetUserByIdAsync(id);
 
-            return todo != null
-                    ? Ok(todo)
-                    : BadRequest("Não achou nada");
+            if (userRepo == null) return BadRequest(new ErrorDTO(false, "Usuário não encontrado no banco de dados"));
+
+            var userUpdate = _mapper.Map(user, userRepo);
+
+            _repository.Update(userUpdate);
+
+            return await _repository.SaveChangesAsync()
+                ? Ok(_mapper.Map<UserGetDTO>(userRepo))
+                : BadRequest(new ErrorDTO(false, "Erro ao atualizar o Usuário"));
 
         }
 
-        [HttpPut("patch")]
+        [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> PutUsers(List<UserDTO> user)
+        public async Task<IActionResult> Delete(int id)
         {
+            if (id <= 0) return BadRequest(new ErrorDTO(false, "Usuário não Encontrado"));
 
+            var userDelete = await _repository.GetUserByIdAsync(id);
 
- 
-                   return BadRequest("Não achou nada");
+            if (userDelete == null) return NotFound(new ErrorDTO(false, "Usuário não Encontrado"));
+
+            _repository.Delete(userDelete);
+
+            return await _repository.SaveChangesAsync()
+                 ? Ok(new {message=  "Usuário deletado com sucesso."})
+                 : BadRequest(new ErrorDTO(false, "Erro ao deletar usuário"));
 
         }
 
@@ -129,9 +145,20 @@ namespace TodoAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Erro ao adiconar Tudo" + ex.Message);
+                return BadRequest(new ErrorDTO(false, "Erro ao fazer login " + ex.Message));
 
             }
+
+        }
+
+        [HttpGet("list")]
+        public async Task<IActionResult> GetUser()
+        {
+            var listUser = await _repository.GetUserAsync();
+
+            return listUser != null
+                    ? Ok(listUser)
+                    : BadRequest(new ErrorDTO(false, "Registro não encontrado"));
 
         }
 

@@ -27,7 +27,6 @@ namespace TodoAPI.Map
             builder.Property(x => x.Sequence).HasColumnName("sequence").IsRequired();
             builder.Property(x => x.Time).HasColumnName("time").IsRequired();
 
-
         }
 
     }

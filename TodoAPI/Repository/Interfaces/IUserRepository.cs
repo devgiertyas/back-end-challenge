@@ -13,6 +13,8 @@ namespace TodoAPI.Repository.Interfaces
 
         Task<User> GetUserByEmailAndPasswordAsync(string email, string password);
 
+        Task<IEnumerable<User>> GetUserAsync();
+
 
     }
 }

@@ -12,8 +12,8 @@ using TodoAPI.Context;
 namespace TodoAPI.Migrations
 {
     [DbContext(typeof(ContextDatabase))]
-    [Migration("20220416012045_StartDB")]
-    partial class StartDB
+    [Migration("20220417191629_startDB")]
+    partial class startDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -79,6 +79,30 @@ namespace TodoAPI.Migrations
                     b.ToTable("todo", (string)null);
                 });
 
+            modelBuilder.Entity("TodoAPI.Models.TodoUser", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("id_user");
+
+                    b.Property<int>("TodoId")
+                        .HasColumnType("integer")
+                        .HasColumnName("id_todo");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.HasKey("UserId", "TodoId");
+
+                    b.HasIndex("TodoId");
+
+                    b.ToTable("todo_user", (string)null);
+                });
+
             modelBuilder.Entity("TodoAPI.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -122,6 +146,35 @@ namespace TodoAPI.Migrations
                             Name = "admin",
                             Password = "82b83e666a49d8a95c424330bb4edfc8"
                         });
+                });
+
+            modelBuilder.Entity("TodoAPI.Models.TodoUser", b =>
+                {
+                    b.HasOne("TodoAPI.Models.Todo", "Todo")
+                        .WithMany("TodoUsers")
+                        .HasForeignKey("TodoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TodoAPI.Models.User", "User")
+                        .WithMany("TodoUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Todo");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TodoAPI.Models.Todo", b =>
+                {
+                    b.Navigation("TodoUsers");
+                });
+
+            modelBuilder.Entity("TodoAPI.Models.User", b =>
+                {
+                    b.Navigation("TodoUsers");
                 });
 #pragma warning restore 612, 618
         }

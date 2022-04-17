@@ -12,6 +12,7 @@ namespace TodoAPI.Context
 
         public DbSet<User> Users { get; set; }
         public DbSet<Todo> Todos { get; set; }
+        public DbSet<TodoUser> TodoUser { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,6 @@
-﻿namespace TodoAPI.Models
+﻿using static TodoAPI.Helpers.EnumApp;
+
+namespace TodoAPI.Models
 {
     public class Todo : Base
     {
@@ -15,10 +17,12 @@
 
         public DateTime ExpectedDate { get; set; }
 
-        public int Status { get; set; }
+        public StatusTodo Status { get; set; }
 
         public int Sequence { get; set; }
         public string Time { get; set; }
+
+        public ICollection<TodoUser> TodoUsers { get; set; }
 
     }
 }

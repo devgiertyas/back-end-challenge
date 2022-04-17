@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using TodoAPI.DataObjects;
+using TodoAPI.DataTransferObjects.Todo;
+using TodoAPI.DataTransferObjects.User;
 using TodoAPI.Models;
 
 namespace TodoAPI.AutoMapper
@@ -9,13 +11,17 @@ namespace TodoAPI.AutoMapper
 
      public AplicationProfile()
         {
-            CreateMap<Todo, TodoDTO>();
 
-            CreateMap<TodoDTO, Todo>().ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<TodoAddDTO, Todo>();
+            CreateMap<Todo, TodoGetDTO>();
 
-            CreateMap<User, UserDTO>().ForMember(x => x.Password, opt => opt.Ignore());
+            CreateMap<User, UserGetDTO>();
 
-            CreateMap<UserDTO, User>().ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<UserAddTDO, User>().ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<UserPutDTO, User>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<User, UserPutDTO>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
         }
 
     }
