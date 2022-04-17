@@ -1,0 +1,509 @@
+{
+	"info": {
+		"_postman_id": "40e33760-60aa-4ad1-8008-dce2ef6365b1",
+		"name": "Todo API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"email\": \"admin@admin.com\",\r\n\"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/api/user/auth",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{urlApi}}/api/user/1",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{urlApi}}/api/user/list",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\": \"Teste\",\r\n\"email\": \"nata@moderniza.group\",\r\n\"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/api/user",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@admin.com\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/api/user/1",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{urlApi}}/api/user/2",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Todo/Tasks",
+			"item": [
+				{
+					"name": "Create Todo/Task",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"category\": \"Desenvolvimento\",\r\n  \"title\": \"Erro ao comunicar com a API\",\r\n  \"project\": \"API Lotus\",\r\n  \"description\": \"Ao consumir o EndPoint de autenticação está dando erro de timeout\",\r\n  \"createdDate\": \"2022-04-17T17:27:38.065Z\",\r\n  \"expectedDate\": \"2022-04-24T17:27:38.065Z\",\r\n\"status\": \"Waiting\",\r\n  \"sequence\": 1,\r\n  \"time\": \"00:30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/api/todo",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User in Todo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idTodo\": 1,\r\n  \"idUser\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/api/todo/add-user",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"todo",
+								"add-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove User in Todo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idTodo\": 1,\r\n  \"idUser\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/api/todo/remove-user",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"todo",
+								"remove-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateStatusTodo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idTodo\": 1,\r\n  \"idUser\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/api/todo/update-status",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"todo",
+								"update-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateSequenceTodo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idTodo\": 1,\r\n  \"idUser\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/api/todo/remove-sequence",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"todo",
+								"remove-sequence"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetByIdTodo/Task",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"category\": \"Suporte\",\r\n  \"title\": \"Erro ao comunicar com a API\",\r\n  \"project\": \"API Lotus\",\r\n  \"description\": \"Ao consumir o EndPoint de autenticação está dando erro de timeout\",\r\n  \"createdDate\": \"2022-04-17T17:27:38.065Z\",\r\n  \"expectedDate\": \"2022-04-24T17:27:38.065Z\",\r\n  \"status\": 1,\r\n  \"sequence\": 1,\r\n  \"time\": \"00:30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/api/todo/1",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"todo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTodos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"category\": \"Suporte\",\r\n  \"title\": \"Erro ao comunicar com a API\",\r\n  \"project\": \"API Lotus\",\r\n  \"description\": \"Ao consumir o EndPoint de autenticação está dando erro de timeout\",\r\n  \"createdDate\": \"2022-04-17T17:27:38.065Z\",\r\n  \"expectedDate\": \"2022-04-24T17:27:38.065Z\",\r\n  \"status\": 1,\r\n  \"sequence\": 1,\r\n  \"time\": \"00:30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{urlApi}}/api/todo/list",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"todo",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletTodo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{urlApi}}/api/todo/2",
+							"host": [
+								"{{urlApi}}"
+							],
+							"path": [
+								"api",
+								"todo",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
